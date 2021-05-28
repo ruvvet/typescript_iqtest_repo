@@ -36,7 +36,7 @@ export default function Main() {
 
   const [posts, setPosts] = useState<TrimPostType[]>([]);
   const [next, setNext] = useState('');
-  const [prev, setPrev] = useState('');
+  const [prev, setPrev] = useState<string[]>([]);
   const [page, setPage] = useState('');
   const [loading, setLoading] = useState(true);
   const [visible, setVisible] = useState(true);
@@ -56,6 +56,7 @@ export default function Main() {
 
       if (response) {
         setNext(response.after);
+
 
         const postKeys = ['id', 'author', 'title', 'created', 'thumbnail'];
         // reduce the data to be sfw
@@ -124,14 +125,23 @@ export default function Main() {
   };
 
   const handleNext = () => {
-    console.log('prev', prev, 'next', next)
-    setPrev(page || '');
+    console.log('prev', prev, 'current', page, 'next', next)
+    setPrev([...prev,page]);
     setPage(next);
+    console.log('prev', prev, 'current', page, 'next', next)
+    console.log('the page that should now render', prev.indexOf(page));
   };
 
   const handlePrev = () => {
-    console.log('prev', prev, 'next', next)
-    setPage(prev);
+    console.log('prev', prev, 'next', next);
+    console.log('the page that should now render', prev[prev.indexOf(page)-1]);
+    if (prev.includes(page)){
+      setPage(prev[prev.indexOf(page)-1])
+    }
+    else{
+      setPage(prev[prev.length-1])
+    }
+  ;
   };
 
   return (
