@@ -1,35 +1,34 @@
-import React, { useEffect, useState, KeyboardEvent } from 'react';
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  DeleteIcon,
+  StarIcon,
+  ViewIcon,
+  ViewOffIcon,
+} from '@chakra-ui/icons';
+import {
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  IconButton,
+  Input,
+  List,
+  ListItem,
+  Spinner,
+  Tooltip,
+} from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory, useParams } from 'react-router-dom';
+import {
+  PostType,
+  RouteParams,
+  SelectedType,
+  TrimPostType,
+} from '../../interfaces';
 import redditRequest from '../../utils';
 import Post from '../Post';
 import './main.css';
-import {
-  Box,
-  Grid,
-  GridItem,
-  Spinner,
-  IconButton,
-  Flex,
-  Center,
-  Text,
-  List,
-  ListItem,
-  Image,
-  Tooltip,
-  Input,
-  Heading,
-} from '@chakra-ui/react';
-import { Route, Switch, Link, useParams, useHistory } from 'react-router-dom';
-import {
-  ArrowRightIcon,
-  ArrowLeftIcon,
-  ViewIcon,
-  ViewOffIcon,
-  StarIcon,
-  DeleteIcon,
-} from '@chakra-ui/icons';
-import {RouteParams, PostType, TrimPostType, SelectedType, Subreddit} from '../../interfaces'
-
-
 
 export default function Main() {
   let { subreddit } = useParams<RouteParams>();
@@ -44,6 +43,7 @@ export default function Main() {
   const [selected, setSelected] = useState<SelectedType>({});
 
   useEffect(() => {
+
     // get the Posts
     const getPosts = async () => {
       const { data: response } = await redditRequest(subreddit, page).catch(
@@ -124,11 +124,13 @@ export default function Main() {
   };
 
   const handleNext = () => {
+    console.log('prev', prev, 'next', next)
     setPrev(page || '');
     setPage(next);
   };
 
   const handlePrev = () => {
+    console.log('prev', prev, 'next', next)
     setPage(prev);
   };
 
@@ -143,7 +145,7 @@ export default function Main() {
     >
       <Flex
         className="main"
-        width="70%"
+        width="85%"
         height="100%"
         direction="column"
         justify="center"
@@ -170,6 +172,7 @@ export default function Main() {
               onClick={handlePrev}
               icon={<ArrowLeftIcon />}
               aria-label="Previous"
+              // isDisabled={prev? true: false}
             />
           </Tooltip>
           <Tooltip label="Next">
@@ -186,9 +189,9 @@ export default function Main() {
         </Grid>
       </Flex>
 
-      <Flex direction="column" justify="flex-start" align="center" width="30%">
-        <Flex>
-          <Heading as="h2" color="white" px={6}>
+      <Flex direction="column" justify="flex-start" align="center" width="30%" h="100%">
+        <Flex m={6} >
+          <Heading as="h2" color="white" px={6} >
             Selected
           </Heading>
           <Tooltip label={visible ? 'Hide' : 'Unhide'}>
@@ -211,8 +214,8 @@ export default function Main() {
           </Tooltip>
         </Flex>
         {visible && (
-          <Flex w="1fr" h="auto" align="center" justify="center">
-            <List>{renderThat()}</List>
+          <Flex align="start" justify="center" overflow="auto" >
+            <List >{renderThat()}</List>
           </Flex>
         )}
       </Flex>

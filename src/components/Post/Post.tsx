@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { Box, Image, Text } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { SelectedType, TrimPostType } from '../../interfaces';
 import './post.css';
-import { Flex, Box, Image, Spacer, Text } from '@chakra-ui/react';
-import {
-  RouteParams,
-  PostType,
-  TrimPostType,
-  SelectedType,
-  Subreddit,
-} from '../../interfaces';
 
 interface Props {
   handleSelect: any;
@@ -63,13 +57,15 @@ export default function Post({
           onMouseLeave={() => setShowTitle(false)}
         >
           {showTitle && (
-            <Text
+            <Text fontSize="xl"
               color="#FFFFFF"
               bgColor="#00000050"
               h="100%"
               w="100%"
               p="2"
               overflow="auto"
+              justify="center"
+              align="center"
             >
               {post.title}
             </Text>
@@ -81,7 +77,7 @@ export default function Post({
           w="100%"
           h="100%"
           objectFit="cover"
-          fallbackSrc="https://via.placeholder.com/150"
+          fallbackSrc="./reddit.png"
         />
       </Box>
     </>
