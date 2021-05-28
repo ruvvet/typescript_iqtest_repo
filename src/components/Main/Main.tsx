@@ -42,28 +42,24 @@ export default function Main() {
   const [visible, setVisible] = useState(true);
   const [selected, setSelected] = useState<SelectedType>({});
 
-  useEffect(() => {
 
+  useEffect(() => {
     // get the Posts
     const getPosts = async () => {
-      const { data: response } = await redditRequest(subreddit, page).catch(
-        (err) => {
-          console.log(err);
-        }
-      );
+      const { data: response } = await redditRequest(subreddit, page);
 
       // set loading/error messages if needed
-
-      if (response) {
+      if (!response) {
+        history.push('/');
+      } else {
         setNext(response.after);
-
 
         const postKeys = ['id', 'author', 'title', 'created', 'thumbnail'];
         // reduce the data to be sfw
         const posts = response.children.reduce(
           (result: TrimPostType[], c: PostType) => {
             // parse out unnecessary data
-            const postObj: { [key: string]: any } = {};
+            const postObj: { [key: string]: string } = {};
 
             if (c.data.over_18 !== 'image') {
               for (const key of postKeys) {
@@ -83,7 +79,7 @@ export default function Main() {
 
     // call the function
     getPosts();
-  }, [subreddit, page]);
+  }, [subreddit, page, history]);
 
   const renderThis = () => {
     return posts.map((p: TrimPostType) => (
@@ -107,9 +103,11 @@ export default function Main() {
     ));
   };
 
-  const handleSearch = (e: any) => {
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    let target = e.target as HTMLInputElement;
+
     if (e.key === 'Enter') {
-      history.push(`/${e.target.value}`);
+      history.push(`/${target.value}`);
     }
   };
 
@@ -125,23 +123,16 @@ export default function Main() {
   };
 
   const handleNext = () => {
-    console.log('prev', prev, 'current', page, 'next', next)
-    setPrev([...prev,page]);
+    setPrev([...prev, page]);
     setPage(next);
-    console.log('prev', prev, 'current', page, 'next', next)
-    console.log('the page that should now render', prev.indexOf(page));
   };
 
   const handlePrev = () => {
-    console.log('prev', prev, 'next', next);
-    console.log('the page that should now render', prev[prev.indexOf(page)-1]);
-    if (prev.includes(page)){
-      setPage(prev[prev.indexOf(page)-1])
+    if (prev.includes(page)) {
+      setPage(prev[prev.indexOf(page) - 1]);
+    } else {
+      setPage(prev[prev.length - 1]);
     }
-    else{
-      setPage(prev[prev.length-1])
-    }
-  ;
   };
 
   return (
@@ -162,7 +153,7 @@ export default function Main() {
         align="center"
         bgColor="black"
       >
-        <Flex justify="space-around">
+        <Flex justify="space-around" w="80%">
           <Tooltip label="Home">
             <Link to="/">
               <IconButton icon={<StarIcon />} aria-label="Home" />
@@ -171,8 +162,9 @@ export default function Main() {
 
           <Input
             color="white"
-            placeholder="Enter Subreddit Name"
+            placeholder="Subreddit Name Goes Here"
             variant="filled"
+            isFullWidth={true}
             onKeyDown={(e) => {
               handleSearch(e);
             }}
@@ -199,9 +191,15 @@ export default function Main() {
         </Grid>
       </Flex>
 
-      <Flex direction="column" justify="flex-start" align="center" width="30%" h="100%">
-        <Flex m={6} >
-          <Heading as="h2" color="white" px={6} >
+      <Flex
+        direction="column"
+        justify="flex-start"
+        align="center"
+        width="30%"
+        h="100%"
+      >
+        <Flex m={6}>
+          <Heading as="h2" color="white" px={6}>
             Selected
           </Heading>
           <Tooltip label={visible ? 'Hide' : 'Unhide'}>
@@ -224,8 +222,8 @@ export default function Main() {
           </Tooltip>
         </Flex>
         {visible && (
-          <Flex align="start" justify="center" overflow="auto" >
-            <List >{renderThat()}</List>
+          <Flex align="start" justify="center" overflow="auto">
+            <List>{renderThat()}</List>
           </Flex>
         )}
       </Flex>

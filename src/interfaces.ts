@@ -4,12 +4,12 @@ export interface RouteParams {
 
 export interface PostType {
   data: {
-    [key: string]: any;
+    [key: string]: string;
   };
 }
 
 export interface TrimPostType {
-  [key: string]: any;
+  [key: string]: string;
 }
 
 export interface SelectedType {
