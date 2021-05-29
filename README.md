@@ -27,12 +27,7 @@ $ npm start
 ```
 ### SCREENSHOTS
 ##### Main Page
-![Main](https://github.com/WAPP-Water-App/wapp-frontend/blob/main/public/ss/wapp-main.gif)
-
-
-## APIs
-
-
+![Main](https://github.com/ruvvet/typescript_iqtest_repo/blob/main/public/main.gif)
 ### Features/User Stories
 
 * Users can see a gridded list of post images + titles for a subreddit
@@ -42,7 +37,7 @@ $ npm start
 
 ### Code Highlights
 
-##### Reducing the Reddit Data + Trimming the Fat 🔪
+#### Reducing the Reddit Data + Trimming the Fat 🔪
 ```ts
 // Main.tsx
 // clean data w/ a reduce to iterate through the array of posts and return only what is needed
@@ -62,7 +57,7 @@ const posts = response.children.reduce(
     []
 );
 ```
-##### Selection Logic ✔
+#### Selection Logic ✔
 ```ts
 // Main.tsx
 // The selected object is a hashmap of all selected posts
@@ -84,7 +79,7 @@ style={{
     }}
 ```
 
-##### Reusable Post Component To Render the List/Grid of Posts 🌎
+#### Reusable Post Component To Render the List/Grid of Posts 🌎
 ```ts
 // Main.tsx
 // The Post component has multiple parameters + defaults set so that it is reusable, recyclable, and clean
@@ -109,7 +104,7 @@ style={{
   };
 ```
 
-##### Routing/Search 🔎
+#### Routing/Search 🔎
 ```ts
 // entering a subreddit name into the url params or typing it into the input search bar
 // will fetch new data from the subreddit entered in the params
@@ -125,7 +120,7 @@ style={{
       history.push(`/${target.value}`);
   };
 ```
-##### Pagination 📄
+#### Pagination 📄
 ```ts
 // Main.tsx
 // The next page is set using data passed back from the json data
