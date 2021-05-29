@@ -2,6 +2,7 @@ import { Box, Image, Text } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { SelectedType, TrimPostType } from '../../interfaces';
 import './post.css';
+import PostDetails from '../PostDetails';
 
 interface Props {
   handleSelect: any;
@@ -9,6 +10,7 @@ interface Props {
   selected: SelectedType;
   h?: string;
   w?: string;
+  thumbnail?: boolean;
 }
 
 export default function Post({
@@ -17,8 +19,9 @@ export default function Post({
   selected,
   h = '200px',
   w = 'auto',
+  thumbnail = false,
 }: Props) {
-  const [showTitle, setShowTitle] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
   return (
     <>
@@ -32,6 +35,8 @@ export default function Post({
         m="6"
         objectFit="cover"
         onClick={() => handleSelect(post)}
+        onMouseEnter={() => setShowDetails(true)}
+        onMouseLeave={() => setShowDetails(false)}
         style={{
           border: `${
             selected[post.id] ? '5px solid white' : '5px solid black'
@@ -39,30 +44,7 @@ export default function Post({
         }}
         position="relative"
       >
-        <Box
-          position="absolute"
-          h="100%"
-          w="100%"
-          objectFit="contain"
-          onMouseEnter={() => setShowTitle(true)}
-          onMouseLeave={() => setShowTitle(false)}
-        >
-          {showTitle && (
-            <Text
-              fontSize="xl"
-              color="#FFFFFF"
-              bgColor="#00000050"
-              h="100%"
-              w="100%"
-              p="2"
-              overflow="auto"
-              justify="center"
-              align="center"
-            >
-              {post.title}
-            </Text>
-          )}
-        </Box>
+        {thumbnail || <PostDetails post={post} showDetails={showDetails} />}
         <Image
           src={post.thumbnail}
           alt={post.title}

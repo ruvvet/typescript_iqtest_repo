@@ -2,7 +2,7 @@
 
 Fetches a json payload of a subreddit's posts and systematically renders each post's image + title. Posts can be selected and displayed/hidden in a side panel.
 
-### ⚙ Tech
+# ⚙ Tech
 ```
 - React App
 - Typescript
@@ -10,7 +10,7 @@ Fetches a json payload of a subreddit's posts and systematically renders each po
 - Reddit API
 ```
 
-### 🚀 Launch Instructions
+# 🚀 Launch Instructions
 ```
 # Clone repo twin
 $ git clone https://github.com/ruvvet/typescript_iqtest_repo.git
@@ -25,18 +25,17 @@ $ npm install
 $ npm start
 
 ```
-### SCREENSHOTS
+# Demo
 ##### Main Page
 ![Main](https://github.com/ruvvet/typescript_iqtest_repo/blob/master/public/main.gif)
-### Features/User Stories
+# Features/User Stories
 
 * Users can see a gridded list of post images + titles for a subreddit
 * Users can navigate to a different subreddit to view posts via routing
 * Users can select images and track selected images
 * Users can navigate back + forth through multiple pages of posts
 
-### Code Highlights
-
+# Code
 #### Reducing the Reddit Data + Trimming the Fat 🔪
 ```ts
 // Main.tsx
@@ -144,7 +143,10 @@ if (prev.includes(page)) {
 };
 
 ```
-
-
+# Future Improvements
+ - Better UI design...
+ - Design for mobile-first
+ - Design for accessibility
+ - Unit Testing
 
 

@@ -55,7 +55,15 @@ export default function Main() {
         setNext(response.after);
 
         // identify keys in the data that we want to filter by
-        const postKeys = ['id', 'author', 'title', 'created', 'thumbnail'];
+        const postKeys = [
+          'id',
+          'author',
+          'name',
+          'title',
+          'score',
+          'created',
+          'thumbnail',
+        ];
 
         // reduce to clean/trim the data
         const posts = response.children.reduce(
@@ -101,6 +109,7 @@ export default function Main() {
           selected={selected}
           h="70px"
           w="70px"
+          thumbnail={true}
         />
       </ListItem>
     ));
@@ -148,7 +157,7 @@ export default function Main() {
 
   return (
     <Flex
-      className="main"
+      className="main scrollbar"
       direction="row"
       justify="center"
       alignItems="flex-start"
@@ -175,7 +184,7 @@ export default function Main() {
             color="white"
             placeholder="Subreddit Name Goes Here"
             variant="filled"
-            isFullWidth={true}
+            isFullWidth
             onKeyDown={(e) => {
               handleSearch(e);
             }}
