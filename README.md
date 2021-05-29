@@ -27,7 +27,7 @@ $ npm start
 ```
 ### SCREENSHOTS
 ##### Main Page
-![Main](https://github.com/ruvvet/typescript_iqtest_repo/blob/main/public/main.gif)
+![Main](https://github.com/ruvvet/typescript_iqtest_repo/blob/master/public/main.gif)
 ### Features/User Stories
 
 * Users can see a gridded list of post images + titles for a subreddit
