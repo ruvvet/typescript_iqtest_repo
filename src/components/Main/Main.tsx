@@ -42,26 +42,28 @@ export default function Main() {
   const [visible, setVisible] = useState(true);
   const [selected, setSelected] = useState<SelectedType>({});
 
-
   useEffect(() => {
-    // get the Posts
+    // on mount, get the Posts from the subreddit
     const getPosts = async () => {
       const { data: response } = await redditRequest(subreddit, page);
 
-      // set loading/error messages if needed
+      // if no response/error, push back to main
       if (!response) {
         history.push('/');
       } else {
+        // prep the next page for pagination
         setNext(response.after);
 
+        // identify keys in the data that we want to filter by
         const postKeys = ['id', 'author', 'title', 'created', 'thumbnail'];
-        // reduce the data to be sfw
+
+        // reduce to clean/trim the data
         const posts = response.children.reduce(
           (result: TrimPostType[], c: PostType) => {
-            // parse out unnecessary data
             const postObj: { [key: string]: string } = {};
-
+            // remove any nsfw content
             if (c.data.over_18 !== 'image') {
+              // parse out unused data by singling out only key-value pairs that match the postKeys array
               for (const key of postKeys) {
                 postObj[key] = c.data[key];
               }
@@ -76,11 +78,11 @@ export default function Main() {
         setLoading(false);
       }
     };
-
     // call the function
     getPosts();
   }, [subreddit, page, history]);
 
+  // renders the main grid of posts
   const renderThis = () => {
     return posts.map((p: TrimPostType) => (
       <GridItem key={`post-${p.id}`}>
@@ -89,6 +91,7 @@ export default function Main() {
     ));
   };
 
+  // renders the list of selected posts
   const renderThat = () => {
     return Object.keys(selected).map((s: string) => (
       <ListItem display="inline-block" key={`selected-${s}`}>
@@ -103,25 +106,33 @@ export default function Main() {
     ));
   };
 
+  // on 'enter', the search input field will push the value as params to the url
+  // which will trigger a re-render using the new params
+  // default params are set to the 'pics' subreddit
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     let target = e.target as HTMLInputElement;
-
     if (e.key === 'Enter') {
       history.push(`/${target.value}`);
     }
   };
 
+  // Handles the selection of a post
+  // The selected object is a hashmap of all selected posts
+  // that are identified by their post-id as the key
+  // handleSelect checks the selected object for the key to see if its already selected
   const handleSelect = (post: TrimPostType) => {
     if (selected[post.id]) {
+      // if the clicked post is in the selected obj, delete it
       const newSelected = { ...selected };
       delete newSelected[post.id];
       setSelected(newSelected);
     } else {
+      // otherwise, add the post obj
       setSelected({ ...selected, [post.id]: post });
-      console.log(selected);
     }
   };
 
+  // Pagination
   const handleNext = () => {
     setPrev([...prev, page]);
     setPage(next);

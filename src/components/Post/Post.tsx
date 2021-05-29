@@ -20,15 +20,6 @@ export default function Post({
 }: Props) {
   const [showTitle, setShowTitle] = useState(false);
 
-  const handleStyle = () => {
-    const selectedStyle = {
-      borderColor: '#000000',
-      borderWidth: '10px',
-    };
-
-    return selectedStyle;
-  };
-
   return (
     <>
       <Box
@@ -57,7 +48,8 @@ export default function Post({
           onMouseLeave={() => setShowTitle(false)}
         >
           {showTitle && (
-            <Text fontSize="xl"
+            <Text
+              fontSize="xl"
               color="#FFFFFF"
               bgColor="#00000050"
               h="100%"
