@@ -142,6 +142,7 @@ if (prev.includes(page)) {
 
 ```
 # Future Improvements
+ - Implement further logic to get high quality images instead of just the thumbnail
  - Better UI design...
  - Design for mobile-first
  - Design for accessibility

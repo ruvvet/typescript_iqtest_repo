@@ -3,6 +3,7 @@ import {
   ArrowRightIcon,
   DeleteIcon,
   StarIcon,
+  RepeatClockIcon
 } from '@chakra-ui/icons';
 import {
   Flex,
@@ -31,7 +32,7 @@ import './main.css';
 export default function Main() {
   let { subreddit } = useParams<RouteParams>();
   const history = useHistory();
-
+  const [allPosts, setAllPosts] = useState<TrimPostType[]>([]);
   const [posts, setPosts] = useState<TrimPostType[]>([]);
   const [next, setNext] = useState('');
   const [prev, setPrev] = useState<string[]>([]);
@@ -80,6 +81,7 @@ export default function Main() {
         );
 
         setPosts(posts);
+        setAllPosts(posts);
         setLoading(false);
       }
     };
@@ -137,6 +139,10 @@ export default function Main() {
     setPosts(unselected);
     setSelected({});
   };
+
+  const handleReset = () =>{
+    setPosts(allPosts);
+  }
 
   // Handles the selection of a post
   // The selected object is a hashmap of all selected posts
@@ -239,6 +245,13 @@ export default function Main() {
               onClick={handleRemove}
               icon={<DeleteIcon />}
               aria-label="Delete"
+            />
+          </Tooltip>
+          <Tooltip label="Undo">
+            <IconButton
+              onClick={handleReset}
+              icon={<RepeatClockIcon />}
+              aria-label="Reset"
             />
           </Tooltip>
         </Flex>
