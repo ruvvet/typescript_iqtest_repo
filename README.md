@@ -25,8 +25,10 @@ $ npm install
 $ npm start
 
 ```
+
 # Demo
-##### Main Page
+https://www.ruvvet.com/typescript_iqtest_repo
+
 ![Main](https://github.com/ruvvet/typescript_iqtest_repo/blob/master/public/main.gif)
 # Features/User Stories
 
@@ -71,11 +73,7 @@ const handleSelect = (post: TrimPostType) => {
 
 // Post.tsx
 // Selected post visual cues are set with a style option on the post
-style={{
-        border: `${
-        selected[post.id] ? '5px solid white' : '5px solid black'
-        }`,
-    }}
+style={{ border: `${selected[post.id] ? '5px solid white' : '5px solid black'}`}}
 ```
 
 #### Reusable Post Component To Render the List/Grid of Posts 🌎
