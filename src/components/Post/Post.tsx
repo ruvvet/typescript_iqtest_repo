@@ -1,8 +1,8 @@
-import { Box, Image, Text } from '@chakra-ui/react';
+import { Box, Image } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { SelectedType, TrimPostType } from '../../interfaces';
-import './post.css';
 import PostDetails from '../PostDetails';
+import './post.css';
 
 interface Props {
   handleSelect: any;

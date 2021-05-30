@@ -1,38 +1,15 @@
+import { LinkIcon } from '@chakra-ui/icons';
 import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  DeleteIcon,
-  StarIcon,
-  ViewIcon,
-  ViewOffIcon,
-  LinkIcon,
-} from '@chakra-ui/icons';
-import {
+  Box,
   Flex,
-  Grid,
-  GridItem,
   Heading,
   IconButton,
-  Input,
-  List,
-  ListItem,
-  Spinner,
-  Tooltip,
-  Box,
-  Text,
   Link,
+  Text,
+  Tooltip,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import { getJSDocDeprecatedTag } from 'typescript';
-import {
-  PostType,
-  RouteParams,
-  SelectedType,
-  TrimPostType,
-} from '../../interfaces';
-import redditRequest from '../../utils';
-import Post from '../Post';
+import React from 'react';
+import { TrimPostType } from '../../interfaces';
 import './postdetails.css';
 
 interface Props {

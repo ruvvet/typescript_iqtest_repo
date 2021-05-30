@@ -73,7 +73,7 @@ const handleSelect = (post: TrimPostType) => {
 
 // Post.tsx
 // Selected post visual cues are set with a style option on the post
-style={{ border: `${selected[post.id] ? '5px solid white' : '5px solid black'}`}}
+//style={{ border: `${selected[post.id] ? '5px solid white' : '5px solid black'}`}}
 ```
 
 #### Reusable Post Component To Render the List/Grid of Posts 🌎

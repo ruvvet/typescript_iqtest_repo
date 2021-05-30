@@ -3,8 +3,6 @@ import {
   ArrowRightIcon,
   DeleteIcon,
   StarIcon,
-  ViewIcon,
-  ViewOffIcon,
 } from '@chakra-ui/icons';
 import {
   Flex,
@@ -39,7 +37,6 @@ export default function Main() {
   const [prev, setPrev] = useState<string[]>([]);
   const [page, setPage] = useState('');
   const [loading, setLoading] = useState(true);
-  const [visible, setVisible] = useState(true);
   const [selected, setSelected] = useState<SelectedType>({});
 
   useEffect(() => {
@@ -125,6 +122,22 @@ export default function Main() {
     }
   };
 
+  const handleRemove = () => {
+    const unselected = posts.reduce(
+      (result: TrimPostType[], post: TrimPostType) => {
+        if (!Object.keys(selected).includes(post.id)) {
+          result.push(post);
+        }
+
+        return result;
+      },
+      []
+    );
+
+    setPosts(unselected);
+    setSelected({});
+  };
+
   // Handles the selection of a post
   // The selected object is a hashmap of all selected posts
   // that are identified by their post-id as the key
@@ -179,7 +192,6 @@ export default function Main() {
               <IconButton icon={<StarIcon />} aria-label="Home" />
             </Link>
           </Tooltip>
-
           <Input
             color="white"
             placeholder="Subreddit Name Goes Here"
@@ -222,30 +234,17 @@ export default function Main() {
           <Heading as="h2" color="white" px={6}>
             Selected
           </Heading>
-          <Tooltip label={visible ? 'Hide' : 'Unhide'}>
-            <IconButton
-              onClick={() => {
-                setVisible(!visible);
-              }}
-              icon={visible ? <ViewOffIcon /> : <ViewIcon />}
-              aria-label="View"
-            />
-          </Tooltip>
           <Tooltip label="Clear">
             <IconButton
-              onClick={() => {
-                setSelected({});
-              }}
+              onClick={handleRemove}
               icon={<DeleteIcon />}
               aria-label="Delete"
             />
           </Tooltip>
         </Flex>
-        {visible && (
-          <Flex align="start" justify="center" overflow="auto">
-            <List>{renderThat()}</List>
-          </Flex>
-        )}
+        <Flex align="start" justify="center" overflow="auto">
+          <List>{renderThat()}</List>
+        </Flex>
       </Flex>
     </Flex>
   );
